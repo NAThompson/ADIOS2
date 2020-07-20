@@ -60,5 +60,3 @@ What ADIOS2 is and isn't
 - **MPI-only**
 
 - **A Hierarchical Model**: Data hierarchies can be built on top of the ADIOS2 according to the application, but ADIOS2 sits a layer of abstraction beneath this.
-
-- **A Memory Manager Library**: we don't own or manage the application's memory

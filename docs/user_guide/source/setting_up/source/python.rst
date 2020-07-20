@@ -2,23 +2,12 @@
 Enabling the Python bindings
 ****************************
 
-To enable the Python bindings in ADIOS2, based on `PyBind11 <http://pybind11.readthedocs.io/en/stable/>`_, make sure to follow these guidelines:
+Building the Python bindings in ADIOS2 requires Python 2.7 or above, ``numpy``, and ``mpi4py``.
 
-- **Minimum requirements:**
-
-    * Python 2.7 and above.
-    * `numpy`
-    * `mpi4py`
-
-- **Running:** If CMake enables Python compilation, an ``adios2.so`` library containing the Python module is generated in the build directory under ``lib/pythonX.X/site-packages/``
-
-    * make sure your ``PYTHONPATH`` environment variable contains the path to ``adios2.so``.
-
-    * make sure the Python interpreter is compatible with the version used for compilation via ``python --version``.
-
-    * Run the Python tests with ``ctest -R Python``
-
-    * Run `helloBPWriter.py <https://github.com/ornladios/ADIOS2/blob/master/examples/hello/bpWriter/helloBPWriter.py>`_ and `helloBPTimeWriter.py <https://github.com/ornladios/ADIOS2/blob/master/examples/hello/bpTimeWriter/helloBPTimeWriter.py>`_ via
+When ``cmake`` is invoked with ``-DADIOS2_USE_Python=ON``, an ``adios2.so`` library containing the Python module is generated in the build directory under ``lib/pythonX.X/site-packages/``
+To use this library, make sure your ``PYTHONPATH`` contains the path to ``adios2.so``.
+The Python interpreter must have the same version as the interpreter used during for compilation.
+The Python tests may be run with ``ctest -R Python``, and a minimal working example may be tested via
 
     .. code-block:: bash
 

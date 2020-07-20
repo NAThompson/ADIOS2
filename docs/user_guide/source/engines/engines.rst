@@ -2,7 +2,8 @@
 Supported Engines
 #################
 
-This section provides a description of the :ref:`Available Engines` in ADIOS2 and their specific parameters to allow extra-control from the user. Parameters are passed in key-value pairs for:
+This section provides a description of the :ref:`Available Engines` in ADIOS2 and their specific parameters to allow extra-control from the user.
+Parameters are passed in key-value pairs for:
 
 1. Engine specific parameters
 

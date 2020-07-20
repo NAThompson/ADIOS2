@@ -100,7 +100,3 @@ For an example file refer to `adios2 config file example in our repo. <https://g
 .. caution::
    
    YAML is case sensitive, make sure the node identifiers follow strictly the keywords: IO, Engine, Variables, Variable, Operations, Transports, Type.
-   
-.. tip::
-   
-   Run a YAML validator or use a YAML editor to make sure the provided file is YAML compatible.

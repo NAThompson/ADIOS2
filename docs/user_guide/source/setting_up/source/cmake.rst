@@ -123,7 +123,7 @@ Notes:
 
   - Use a ``PackageName_ROOT`` variable to provide the location of a specific package.
   - Add an install prefix to the ``CMAKE_PREFIX_PATH`` which is searched for all packages.
-  - Both the ``PackageName_ROOT`` and ``CMAKE_PREFIX_PATH`` can be used as either environment variables or CMake variables (passed via -D), where the CMake variable takes prescedence.
+  - Both the ``PackageName_ROOT`` and ``CMAKE_PREFIX_PATH`` can be used as either environment variables or CMake variables (passed via -D), where the CMake variable takes precedence.
 
 .. code-block:: bash
 
@@ -132,7 +132,7 @@ Notes:
     $ export CMAKE_PREFIX_PATH=/opt/foo/bar
     $ cmake -DHDF5_ROOT=/opt/hdf5/1.12.0 ../ADIOS2
 
-Example: the following configuration will build, test and install under /opt/adios2/2.6.0 an optimized (Release) version of ADIOS2.
+Example: the following configuration will build, test and install an optimized version of ADIOS2:
 
 .. code-block:: bash
 

@@ -20,13 +20,13 @@ APIs
 Building on Titan
 *****************
 
-#. :ref:`My application uses PGI compilers on Titan, can I link ADIOS 2?`
+#. :ref:`My application uses PGI compilers on Titan, can I link ADIOS2?`
 #. :ref:`How do I enable the Python bindings on Titan?`
 
 Building and Running on Fujitsu FX100
 *************************************
 
-#. :ref:`How do I build ADIOS 2 on Fujitsu FX100?`
+#. :ref:`How do I build ADIOS2 on Fujitsu FX100?`
 #. :ref:`SST engine hangs on Fujitsu FX100. Why?`
 
 FAQs Answered
@@ -35,51 +35,60 @@ FAQs Answered
 Can I use the same library for MPI and non-MPI code?
 ----------------------------------------------------
 
-Short answer: No.
+No; separate libraries are built for MPI and non-MPI code.
+Pass ``adios2::cxx11`` to the CMake ``target_link_libraries`` command to link the serial library, and ``adios2::cxx11_mpi MPI::MPI_C`` to link the MPI library.
 
-Long answer: This created conflicts in the past, as the MPI APIs were mocked in the sequential version.
-If you need "sequential" behavior with the MPI library, use ``MPI_COMM_SELF``.
-Always pass a communicator in the MPI version
+If you need "sequential" behavior with the MPI library, pass ``MPI_COMM_SELF`` to the ``adios2::ADIOS`` object.
 
 
 Can I use ADIOS 2 C++11 library with C++98 codes?
 -------------------------------------------------
 
-Use the :ref:`C bindings`. C++11 is a brand new language standard and many new (and old, *e.g.* ``std::string``) might cause ABI conflicts.
+Use the :ref:`C bindings`.
+C++11 is a brand new language standard and many new (and old, *e.g.* ``std::string``) might cause ABI conflicts.
 
 Why are C and Fortran APIs missing functionality?
 -------------------------------------------------
 
-Because language intrinsics are NOT THE SAME. For example, C++ and Python support key/value pair structures natively, *e.g.* ``std::map`` and dictionaries, respectively.
+Because language intrinsics are different.
+For example, C++ and Python support key/value pair structures natively, *e.g.* ``std::map`` and dictionaries, respectively.
 Fortran and C only support arrays natively.
-Use the right language (tool) for the right task.
 
 
 C++11: Why are std::string arguments passed sometimes by value and sometimes by reference?
 ------------------------------------------------------------------------------------------
 
-C++11, provides mechanisms to optimize copying small objects, rather than passing by reference. The latter was always the rule for C++98. When a string is passed by value, it's assumed that the name will be short, <= 15 characters, most of the time. While passing by reference indicates that the string can be of any size. Check the `isocpp guidelines on this topic <http://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#f15-prefer-simple-and-conventional-ways-of-passing-information>`_ for more information.
+C++11, provides mechanisms to optimize copying small objects, rather than passing by reference.
+The latter was always the rule for C++98.
+When a string is passed by value, it's assumed that the name will be short, most of the time.
+While passing by reference indicates that the string can be of any size.
+Refer to the `isocpp guidelines on this topic <http://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#f15-prefer-simple-and-conventional-ways-of-passing-information>`_ for more information.
 
 
 C++11: Should I pass adios2:: objects by value or by reference?
 ---------------------------------------------------------------
 
-``adios2::ADIOS``: always pass by reference this is the only "large memory" object; all others: pass by reference or value depending on your coding standards and requirements, they are small objects that wrap around a pointer to an internal object inside ``adios2::ADIOS``.
+Always pass the ``adios2::ADIOS`` object by reference.
+This is the only "large memory" object; all others may be passed by reference or value depending on your coding standards.
+They are small objects that wrap around a pointer to an internal object inside ``adios2::ADIOS``.
 
 
 Fortran: Can I pass slices and temporary arrays to adios2_put?
 --------------------------------------------------------------
 
-By definition the lifetime of a temporary if the scope of the function is passed to. Therefore,
-you must use sync mode with ``adios2_put``.
+By definition the lifetime of a temporary if the scope of the function is passed to.
+Therefore, you must use sync mode with ``adios2_put``.
 Deferred mode will save garbage data since the memory location of a temporary is undefined after ``adios2_put``, not able to reach ``adios2_end_step``, ``adios2_close`` or ``adios2_perform_puts`` where the memory is actually used.
 
 
 
-My application uses PGI compilers on Titan, can I link ADIOS 2?
+My application uses PGI compilers on Titan, can I link ADIOS2?
 ---------------------------------------------------------------
 
-Follow directions at :ref:`Building on HPC Systems` to setup support for PGI on Titan. PGI compilers depend on GNU headers, but they must point to a version greater than gcc 4.8.1 to support C++11 features. The gcc module doesn't need to be loaded, though. Example:
+Follow directions at :ref:`Building on HPC Systems` to setup support for PGI on Titan.
+PGI compilers depend on GNU headers, but they must point to a version greater than gcc 4.8.1 to support C++11 features.
+The gcc module doesn't need to be loaded, though.
+Example:
 
    .. code-block:: bash
 
@@ -91,7 +100,10 @@ Follow directions at :ref:`Building on HPC Systems` to setup support for PGI on 
 How do I enable the Python bindings on Titan?
 ---------------------------------------------
 
-The default ADIOS2 configuration on Titan builds a static library. Python bindings require enabling the dynamic libraries and the Cray dynamic environment variable. See :ref:`Building on HPC Systems` and  :ref:`Enabling the Python bindings`. For example:
+The default ADIOS2 configuration on Titan builds a static library.
+Python bindings require enabling the dynamic libraries and the Cray dynamic environment variable.
+See :ref:`Building on HPC Systems` and  :ref:`Enabling the Python bindings`.
+For example:
 
    .. code-block:: bash
 
@@ -163,15 +175,15 @@ The default ADIOS2 configuration on Titan builds a static library. Python bindin
       -- Build files have been written to: /ccs/home/atkins3/code/adios/build
 
 
-How do I build ADIOS 2 on Fujitsu FX100?
+How do I build ADIOS2 on Fujitsu FX100?
 ----------------------------------------
 
 * Cross-compilation (building on the login node) is not recommended. Submit an
   interactive job and build on the compute nodes.
-* Make sure CMake >= 3.6 is installed on the compute nodes. If not, you need
+* Make sure CMake is installed on the compute nodes. If not, you need
   to build and install it from source since CMake does not provide SPARC V9
   binaries.
-* Use gcc instead of the Fujitsu compiler. We tested with gcc 6.3.0
+* Use ``gcc`` instead of the Fujitsu compiler. We tested with gcc 6.3.0.
 * CMake fails to automatically find the correct MPI library on FX100. As a
   workaround, set CC, CXX, and FC to the corresponding MPI compiler wrappers:
 
@@ -182,8 +194,8 @@ How do I build ADIOS 2 on Fujitsu FX100?
 SST engine hangs on Fujitsu FX100. Why?
 ---------------------------------------
 
-The communication thread of SST might have failed to start. FX100 requires
-users to set the maximum stack size manually when launching POSIX threads.
-One way to do this is through ulimit (*e.g.* ``ulimit -s 1024``). You can
-also set the stack size when submitting the job. Please contact your system
-administrator for details.
+The communication thread of SST might have failed to start.
+FX100 requires users to set the maximum stack size manually when launching POSIX threads.
+One way to do this is through ``ulimit`` (*e.g.* ``ulimit -s 1024``).
+You can also set the stack size when submitting the job.
+Please contact your system administrator for details.

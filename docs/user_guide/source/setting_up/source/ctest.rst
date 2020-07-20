@@ -2,15 +2,14 @@
 Running Tests
 *************
 
-ADIOS2 uses `googletest <https://github.com/google/googletest>`_ to enable automatic testing after a CMake build. To run tests just type after building with make, run:
+To run the unit tests type
 
 .. code-block:: bash
 
-    $ ctest    
-      or  
-    $ make test
+    $ ctest
 
-The following screen will appear providing information on the status of each finalized test:
+in the build directory.
+The following screen will appear providing information on the status of each test:
 
 .. code-block:: bash
 
@@ -32,6 +31,3 @@ The following screen will appear providing information on the status of each fin
     100% tests passed, 0 tests failed out of 130
 
     Total Test time (real) = 204.82 sec
-
-
-

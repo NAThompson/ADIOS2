@@ -1,12 +1,12 @@
 ###############
-Linking ADIOS 2
+Linking ADIOS2
 ###############
 
 **********
 From CMake
 **********
 
-ADIOS exports a CMake package configuration file that allows its targets to be directly imported into another CMake project via the ``find_package`` command:
+ADIOS2 exports a CMake package configuration file that allows its targets to be directly imported into another CMake project via the ``find_package`` command:
 
 .. code-block:: cmake
 

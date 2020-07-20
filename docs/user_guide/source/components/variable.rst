@@ -5,7 +5,7 @@ Variable
 An ``adios2::Variable`` is the link between a piece of data coming from an application and its metadata.
 This component handles all application variables classified by data type and shape.
 
-Each ``IO`` holds a set of Variables, and each ``Variable`` is identified with a unique name.
+Each ``IO`` holds a set of variables, and each ``Variable`` is identified with a unique name.
 They are created using the reference from ``IO::DefineVariable<T>`` or retrieved using the pointer from ``IO::InquireVariable<T>`` functions in :ref:`IO`.
 
 Data Types
@@ -17,8 +17,6 @@ ADIOS2 maps primitive types to equivalent fixed-width types (e.g. ``int`` -> ``i
 In C++, acceptable types ``T`` in ``Variable<T>`` along with their preferred fix-width equivalent in 64-bit platforms are given below:
 
 .. code-block:: c++
-
-   Data types Variables supported by ADIOS2 Variable<T>
 
    std::string (only used for global and local values, not arrays)
    char                      -> int8_t or uint8_t depending on compiler flags
